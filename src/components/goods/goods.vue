@@ -1,14 +1,10 @@
 <template>
   <div>
-		<v-header></v-header>
+		goods路由的出口
 	</div>
 </template>
 <script>
-import header from 'components/header/header';
 export default {
-	components: {
-  'v-header': header
-	}
 };
 </script>
 <style lang="stylus" scoped>
