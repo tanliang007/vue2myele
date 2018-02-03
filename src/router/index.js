@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import goods from '@/components/goods/goods';
 import ratings from '@/components/ratings/ratings';
 import seller from '@/components/seller/seller';
+import upload from '@/components/upload';
 Vue.use(Router);
 
 export default new Router({
@@ -16,8 +17,11 @@ export default new Router({
       component: goods
     },
     {
-      path: '/ratings',
-      component: ratings
+      path: '/upload',
+      components: {
+        default: ratings,
+        upload: upload
+      }
     },
     {
       path: '/seller',

@@ -13,6 +13,7 @@
       </div>
     </div>
     <router-view/>
+    <router-view class="view two" name="upload"></router-view>
   </div>
 </template>
 
@@ -24,24 +25,8 @@
       "v-header": header
     },
     created() {
-      // class Animal { supert 关键字
-      //   constructor(color) {
-      //     this.color = color;
-      //   }
-      //   run() {
-      //     return "run";
-      //   }
-      // }
-      // class Bear extends Animal {
-      //   constructor() {
-      //     super();
-      //   }
-      //   a() {
-      //     console.log(super.run());
-      //   }
-      // }
-      // const a = new Bear();
-      // a.a();
+     var a = () => console.log(1);
+     a();
     }
   };
 </script>
