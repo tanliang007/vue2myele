@@ -1,7 +1,7 @@
 <template>
   <div>
-		goods路由的出口
-	</div>
+    我是goods组件
+  </div>
 </template>
 <script>
 export default {

@@ -1,7 +1,7 @@
 <template>
   <div>
-		I am ratings
-	</div>
+	I am ratings
+  </div>
 </template>
 <script>
 export default {
