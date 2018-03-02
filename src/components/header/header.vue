@@ -33,21 +33,39 @@
     <div v-show="detailshow" class="detail">
       <div class="detail-wrapper clearfix">
         <div class="detail-main">
-          <p>{{seller.bulletin}}</p>
-          <p>{{seller.bulletin}}</p>
-          <p>{{seller.bulletin}}</p>
-          <p>{{seller.bulletin}}</p>
-          <p>{{seller.bulletin}}</p>
-          <p>{{seller.bulletin}}</p>
-          <p>{{seller.bulletin}}</p>
-          <p>{{seller.bulletin}}</p>
+          <h1 class="name">{{seller.name}}</h1>
+          <div class="star-wrapper">
+            <star :size='48' :score='seller.score'></star>
+          </div>
+          <div class="title">
+            <div class="line"></div>
+            <div class="text">优惠信息</div>
+            <div class="line"></div>
+          </div>
+          <ul v-if="seller.supports" class="supports">
+            <li class="supports-item" :key=index v-for="(item,index) in seller.supports">
+              <span class="icon" :class="classMap[item.type]"></span>
+              <span class="text">{{item.description}}</span>
+            </li>
+          </ul>
+          <div class="title">
+            <div class="line"></div>
+            <div class="text">商家公告</div>
+            <div class="line"></div>
+          </div>
+          <div class="bulletin">
+            <p class="content">{{seller.bulletin}}</p>
+          </div>
         </div>
       </div>
-      <div class="icon-close"></div>
+      <div class="detail-close" @click="hideDeatail">
+        <div class="icon-close" ></div>
+      </div>
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
+import star from 'components/star/star';
   export default {
     data () {
       return {
@@ -64,9 +82,14 @@
     },
     methods: {
       showDetail(){
-        console.log(1);
         this.detailshow = true;
+      },
+      hideDeatail(){
+        this.detailshow = false;
       }
+    },
+    components: {
+      star
     }
   };
 </script>
@@ -196,12 +219,71 @@
         min-height 100%
         .detail-main
           margin-top 64px
+          // 底部close的高度
           padding-bottom 64px
+          .name
+            line-height 16px
+            text-align center
+            font-size 16px
+            font-weight 700
+          .star-wrapper
+            margin-top: 18px
+            padding: 2px 0
+            text-align: center
+        .title
+          display flex
+          width 80%
+          margin 28px auto 24px auto
+          .text
+            padding 0px 10px
+            font-size 15px
+            font-weight 700
+          .line
+            flex 1// 会使用到postcss帮我们做兼容处理
+            margin-bottom 6px
+            border-1px(rgba(255,255,255,0.2))
+        .supports
+          margin 0 auto
+          width 80%
+          .supports-item
+             margin-bottom: 12px
+             &:last-child
+               margin-bottom: 0
+            .icon
+              display inline-block
+              width 16px
+              height 16px
+              margin-right 4px
+              vertical-align top
+              background-size 16px 16px
+              background-repeat no-repeat
+              &.decrease
+                bg-image('decrease_2')
+              &.discount
+                bg-image('discount_2')
+              &.guarantee
+                bg-image('guarantee_2')
+              &.invoice
+                bg-image('invoice_2')
+              &.special
+                bg-image('special_2')
+            .text
+              font-size 12px
+              font-weight 200
+              color rgb(255,255,255)
+              line-height 16px
+        .bulletin
+          width 80%
+          margin 0 auto
+          .content
+            font-size 12px
+            line-height 15px
+            padding 0 12px
     .icon-close
       position relative
       width 32px
       height 32px
-      margin -64px auto 0 auto
+      margin -50px auto 0 auto
       clear both
       font-size 32px
 </style>
