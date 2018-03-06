@@ -12,7 +12,8 @@
         <router-link :to="{path:'/seller'}" class="tab-item">商家</router-link>
       </div>
     </div>
-    <router-view/>
+    <!-- 路由出口也支持传递 -->
+    <router-view :seller='seller'/>
   </div>
 </template>
 

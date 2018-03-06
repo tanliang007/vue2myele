@@ -30,7 +30,8 @@
     <div class="background">
        <img :src="seller.avatar" alt="" width="100%" height="100%">
     </div>
-    <div v-show="detailshow" class="detail">
+    <transition name="fade">
+      <div v-show="detailshow" class="detail">
       <div class="detail-wrapper clearfix">
         <div class="detail-main">
           <h1 class="name">{{seller.name}}</h1>
@@ -62,6 +63,7 @@
         <div class="icon-close" ></div>
       </div>
     </div>
+    </transition>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -214,6 +216,11 @@ import star from 'components/star/star';
       z-index 100
       overflow auto
       background-color rgba(7,17,27,0.8)
+      backdrop-filter blur(2px)
+      &.fade-enter-active,&.fade-leave-active // 过度的时候添加过渡属性
+        transition all 3s
+      &.fade-enter,&.fade-leave-to // 离开的时候
+        opacity: 0
       .detail-wrapper
         width: 100%
         min-height 100%

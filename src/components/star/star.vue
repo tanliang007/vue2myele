@@ -23,7 +23,6 @@ const CLS_OFF = 'off';
       },
       itemClasses(){
         let result = [];
-        console.log(this.score);
         let score = Math.floor(this.score * 2) / 2;
         let hasDecimal = score % 1 !== 0; // 说明有半星
         let integer = Math.floor(score);// 有多少全星
