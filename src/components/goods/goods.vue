@@ -31,14 +31,16 @@
                   <span class="new">¥{{food.price}}</span>
                   <span class="old" v-show="food.oldPrice">{{food.oldPrice}}</span>
                 </div>
-                <cartcontrol :food='food'></cartcontrol>
+                <!-- 加减号组件 -->
+                <cartcontrol @add='addFood' :food='food'></cartcontrol>
               </div>
             </li>
           </ul>
         </li>
       </ul>
     </div>
-    <shopcart :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopcart>
+    <!-- 底部购物车 -->
+    <shopcart   ref="shopcart" :selectFoods='selectFoods' :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopcart>
   </div>
 </template>
 <script type='text/ecmascript-6'>
@@ -48,7 +50,7 @@ import cartcontrol from 'components/cartcontrol/cartcontrol';
 const ERR_OK = 0;
 export default {
   props: {
-    seller: {
+    seller: { // 路由出口传过来的数据
       type: Object
     }
   },
@@ -72,6 +74,17 @@ export default {
         }
       }
       return 0;
+    },
+    selectFoods() { // 将数量的变化传递给shopcart组件改变的都是同一个goods对象同步购物车的变化
+      let foods = [];
+      this.goods.forEach((good) => {
+        good.foods.forEach((food) => {
+          if (food.count){
+            foods.push(food);
+          }
+        });
+      });
+      return foods;
     }
   },
   created () {
@@ -79,7 +92,7 @@ export default {
     this.$http.get('/api/goods')
     .then(res => {
       if (res.data.errno === ERR_OK){
-        console.log(res.data.data);
+        // console.log(res.data.data);
         this.goods = res.data.data;// dom还没有变化用vue的接口
         this.$nextTick(() => { // 在计算一些dom相关的需在这回调函数中确认dom已经渲染
           this._initScroll();
@@ -98,6 +111,14 @@ export default {
       let foodList = this.$refs.foodList;
       let el = foodList[index];
       this.foodsScroll.scrollToElement(el, 300);
+    },
+    addFood(b){ // 接受子组件通知触发事件
+      this._drop(b.target);
+    },
+    _drop (target){
+      this.$nextTick(() => {
+        this.$refs.shopcart.drop(target);
+      });
     },
     _initScroll(){
       this.menuScroll = new BSscroll(this.$refs.menuWrapper, {
